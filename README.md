@@ -4,7 +4,7 @@
 
 Este examen práctico evalúa tus habilidades en **arquitectura de
 microservicios**, **.NET 8/9**, **mensajería con RabbitMQ**, **cliente
-web (Angular/React)**, **procesamiento asíncrono**, **implementación de
+web React**, **procesamiento asíncrono**, **implementación de
 colas**, **trazabilidad**, **persistencia en PostgreSQL**,
 **notificaciones por correo** y buenas prácticas de desarrollo.
 
@@ -12,10 +12,7 @@ El reto simula un flujo real de **carga masiva de datos**, completamente
 distribuido, siguiendo la arquitectura mostrada en el diagrama
 entregado.
 
-<img width="1491" height="1047" alt="image" src="https://github.com/user-attachments/assets/bbd92425-4c68-4185-8a46-1f4f7647085d" />
-
-
-------------------------------------------------------------------------
+<img width="1812" height="861" alt="image" src="https://github.com/user-attachments/assets/c4491384-ba6d-41c4-9347-7d7255ee38a6" />
 
 ------------------------------------------------------------------------
 
@@ -35,11 +32,17 @@ prácticas **senior**.
 
 La solución completa consiste en:
 
-### ✔️ **1. Cliente Web (Angular o React)**
+### ✔️ **1. Cliente Web React**
 
-Permite: - Subir un archivo Excel (.xlsx). - Consultar el historial de
-cargas. - Ver el estado de cada procesamiento: - **Pendiente** - **En
-proceso** - **Cargado** - **Finalizado** - **Notificado**
+Permite: 
+    - Subir un archivo Excel (.xlsx). 
+    - Consultar el historial de cargas. 
+    - Ver el estado de cada procesamiento: 
+        1. **Pendiente** 
+        2. **En proceso** 
+        3. **Cargado** 
+        4. **Finalizado** 
+        5. **Notificado**
 
 ------------------------------------------------------------------------
 
@@ -189,10 +192,12 @@ Servicio distribuido para almacenar los archivos Excel subidos.
 
 ## **Frontend**
 
--   Angular 15+ o React 18+
+-   React 16+
 -   Uso de componentes
--   Pantallas requeridas: \### 1. Subida de Excel \### 2. Historial de
-    cargas (tabla) \### 3. Detalle del estado de una carga
+-   Pantallas requeridas:
+    \### 1. Subida de Excel
+    \### 2. Historial de cargas (tabla)
+    \### 3. Detalle del estado de una carga
 
 ------------------------------------------------------------------------
 
@@ -224,7 +229,7 @@ SeaweedFS: - Servicio dockerizado - Endpoint para subir archivos
 ------------------------------------------------------------------------
 
 # 📊 5. Estructura sugerida de la base de datos
-
+`Script referencial`
 ``` sql
 CREATE TABLE CargaArchivo (
     Id SERIAL PRIMARY KEY,
@@ -255,7 +260,7 @@ CREATE TABLE CargaArchivo (
 ### **3. Docker / DevOps (20%)**
 
 -   docker-compose funcional
--   Servicios se levantan sin errores
+-   Servicios se levantan sin errores (opcional)
 
 ### **4. Frontend (20%)**
 
@@ -273,7 +278,7 @@ El postulante debe entregar un repositorio con:
 
 ### ✔️ Documentación en README
 
-### ✔️ Instrucciones de despliegue
+### ✔️ Instrucciones de despliegue (opcional)
 
 ### ✔️ Scripts de base de datos
 
@@ -289,7 +294,7 @@ Una solución funcional, modular, distribuida, escalable y construida con
 estándares SENIOR.
 
 Este reto está diseñado para verificar tu dominio práctico sobre: -
-microservicios - colas - .NET - Angular/React - procesamiento masivo -
+microservicios - colas - .NET - React - procesamiento masivo -
 asincronía - docker - arquitectura limpia
 
 ------------------------------------------------------------------------
