@@ -12,7 +12,7 @@ El reto simula un flujo real de **carga masiva de datos**, completamente
 distribuido, siguiendo la arquitectura mostrada en el diagrama
 entregado.
 
-<img width="1812" height="861" alt="image" src="https://github.com/user-attachments/assets/b9f77905-50b1-4117-8f3b-6574bb652e0d" />
+<img width="1812" height="861" alt="image" src="https://github.com/user-attachments/assets/96c8b43a-5b0d-4ce8-8f40-867efe799bbb" />
 
 ------------------------------------------------------------------------
 
