@@ -5,7 +5,7 @@
 Este examen práctico evalúa tus habilidades en **arquitectura de
 microservicios**, **.NET 8/9**, **mensajería con RabbitMQ**, **cliente
 web React**, **procesamiento asíncrono**, **implementación de
-colas**, **trazabilidad**, **persistencia en PostgreSQL**,
+colas**, **trazabilidad**, **persistencia en PostgreSQL o SQL Server**,
 **notificaciones por correo** y buenas prácticas de desarrollo.
 
 El reto simula un flujo real de **carga masiva de datos**, completamente
@@ -35,7 +35,8 @@ La solución completa consiste en:
 ### ✔️ **1. Cliente Web React**
 
 Permite: 
-- Subir un archivo Excel (.xlsx).  
+- Iniciar Sesión
+- Subir un archivo Excel (.xlsx).
 - Consultar el historial de cargas.  
 - Ver el estado de cada procesamiento, que puede ser:
 
@@ -72,7 +73,8 @@ Funciones mínimas:
 
 Funciones:
 
-- Recibe desde el Gateway la solicitud para cargar el archivo.  
+- Recibe desde el Gateway la solicitud para cargar el archivo.
+- Realiza validaciones y limpieza de datos del Excel.
 - Guarda trazabilidad del archivo (estado inicial: **Pendiente**).  
 - Publica un mensaje en RabbitMQ para que el archivo sea procesado.  
 - Envía el archivo al servicio de almacenamiento SeaweedFS.
@@ -86,7 +88,7 @@ Responsabilidades:
 - Escucha la cola RabbitMQ.  
 - Descarga el archivo desde SeaweedFS.  
 - Procesa registro por registro.  
-- Inserta la información en PostgreSQL.  
+- Inserta la información en PostgreSQL o SQL Server.  
 - Marca la trazabilidad en los estados:  
   - **En proceso**  
   - **Cargado**  
@@ -156,7 +158,7 @@ Funciones adicionales de negocio:
 - Registra auditoría de quién subió el archivo y cuándo.
 
 Flujo principal:
-- Guarda un registro en PostgreSQL con estado inicial:  
+- Guarda un registro en PostgreSQL o SQL Server con estado inicial:  
   - `Pendiente`
 - Sube el archivo a **SeaweedFS**.
 - Publica en RabbitMQ el mensaje:
@@ -224,7 +226,7 @@ Flujo principal:
     -   todos los microservicios
     -   rabbitmq
     -   seaweedfs
-    -   postgres
+    -   postgres o sqlserver
     -   gateway
 - **Implementar Patrón Rate Limiting**
 - Implementar Patrón Circuit Breaker (Opcional pero valorado)
