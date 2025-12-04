@@ -74,7 +74,7 @@ Funciones mínimas:
 Funciones:
 
 - Recibe desde el Gateway la solicitud para cargar el archivo.
-- Realiza validaciones y limpieza de datos del Excel.
+- Validar que archivo tenga no exceda el tamaño maximo configurado.
 - Guarda trazabilidad del archivo (estado inicial: **Pendiente**).  
 - Publica un mensaje en RabbitMQ para que el archivo sea procesado.  
 - Envía el archivo al servicio de almacenamiento SeaweedFS.
@@ -87,7 +87,8 @@ Responsabilidades:
 
 - Escucha la cola RabbitMQ.  
 - Descarga el archivo desde SeaweedFS.  
-- Procesa registro por registro.  
+- Procesa el registro.
+- Realiza validaciones y limpieza de datos del Excel.
 - Inserta la información en PostgreSQL o SQL Server.  
 - Marca la trazabilidad en los estados:  
   - **En proceso**  
@@ -174,6 +175,28 @@ Flujo principal:
 ------------------------------------------------------------------------
 
 ### **3️⃣ Microservicio de Carga Masiva**
+
+### 🧩 Lógica de negocio incluida — Validación de duplicidad por periodo
+
+1. El archivo Excel contiene un campo o columna `Periodo`.  
+2. Se consulta la base de datos para verificar si ya existe una carga previa para el mismo Periodo.  
+3. Reglas de negocio:
+   - Si existe una carga previa con estado **Cargado**, **Finalizado** o **Notificado**, la carga debe ser **rechazada**.
+   - Si existe una carga previa **Pendiente** o **En proceso**, la carga debe ser **bloqueada**, evitando cargas simultáneas para el mismo periodo.
+   - Solo si el periodo no tiene cargas activas o finalizadas, el sistema registra una nueva carga con estado **Pendiente** y continúa el proceso.
+**En el caso de que no se cumpla con alguna validación se debe finalizar el proceso y almacenar los fallidos en una tabla de auditoria y trazabilidad**
+
+### 🧩 Lógica de negocio incluida — Validación de duplicidad de registros
+
+1. El archivo Excel contiene un campo o columna `CodigoProducto`.  
+2. Se consulta la base de datos para verificar si ya existe un registro con el mismo Codigo.
+3. Reglas de negocio:
+   - Si existe un elemento con el mismo Codigo no se debe registrar y se debe reportar como **Existente**.
+
+
+**En el caso de que no se cumpla con alguna validación se deben almacenar los fallidos en una tabla de auditoria y trazabilidad**
+
+### Esta validación permite asegurar consistencia de datos y evita duplicidades funcionales.
 
 -   Consume el mensaje.
 -   Actualiza el estado → **En proceso**.
@@ -279,6 +302,10 @@ SeaweedFS: - Servicio dockerizado - Endpoint para subir archivos (Abierto a usar
 ------------------------------------------------------------------------
 
 # 📊 5. Estructura sugerida de la base de datos
+
+- Para la construcción del modelo de datos se debe utilizar el criterio propio del candidato, se dejan scripts y nombres de referencia, sin embargo,
+se deben contemplar los casos de uso y las reglas de negocio para construir la base de datos.
+
 `Script referencial`
 ``` sql
 CREATE TABLE CargaArchivo (
